@@ -13,7 +13,7 @@ The system coordinates specialized autonomous agents to deliver end-to-end trave
 - **Hotel Search & Direct Reservation**: Curates accommodation options across luxury, boutique, and value tiers with pre-filled booking links for **Booking.com**, **Expedia**, and **Google Hotels**.
 - **Live In-Trip Flight Status Tracking**: Connects to the **OpenSky Network API** for live transponder telemetry, gate, terminal, and baggage carousel updates, with direct links to **FlightRadar24** live radar.
 - **Dynamic Itinerary Architect**: Constructs geographically optimized, day-by-day itineraries tailored to the traveler's duration, budget, and saved attractions, with one-click export to Markdown (`saved_trips/`).
-- **Automated Destination-Based Chat History**: Automatically synchronizes session metadata in the Google ADK Web UI so past and active conversations are clearly organized by destination (e.g., *Trip to Paris*, *Trip to Tokyo*, *Trip to Ladakh*).
+- **Automated Destination-Based Chat History**: Automatically synchronizes session metadata in the Google ADK Web UI so past and active conversations are clearly organized by destination (e.g., *Trip to Manali, India*, *Trip to Paris*, *Trip to Jaipur*, *Trip to Ladakh*).
 - **Quota Resilience & Graceful Fallback**: Built-in `Graceful429Plugin` intercepts rate-limit spikes (`RESOURCE_EXHAUSTED` / HTTP 429) and provides smooth failover responses without terminating sessions.
 
 ---
@@ -39,6 +39,9 @@ The system coordinates specialized autonomous agents to deliver end-to-end trave
                              └───────────────┘
 ```
 
+### Live Agent Execution Graph
+![Multi-Agent Architecture Graph](assets/agent_graph_architecture.png)
+
 ### Specialized Agents & Roles
 
 1. **Travel Coordinator** (`travel_coordinator`):
@@ -55,6 +58,36 @@ The system coordinates specialized autonomous agents to deliver end-to-end trave
    - Provides on-the-ground logistics: airport transit, local passes, currency tips, packing checklists, and local etiquette.
 7. **In-Trip Concierge** (`in_trip_concierge`):
    - Supports travelers during their journey with real-time flight status checks, terminal/gate numbers, and delay alerts.
+
+---
+
+## 📸 Working Model in Action
+
+### 1. Destination Discovery & Attractions Guide
+When planning a trip, the `attractions_guide` curates categorized points of interest (landmarks, adventure thrills, hidden gems, culinary experiences) and maintains the traveler's wishlist:
+
+![Destination & Attractions Planning](assets/destination_attractions_planning.png)
+
+---
+
+### 2. Real-Time Flight Search & Live Booking Links
+The `booking_specialist` searches flight schedules and real-world prices across major airlines, providing instant deep links to **Google Flights**, **Skyscanner**, and **Kayak** for direct checkout and live seat map selection:
+
+![Flight Search & Live Booking Links](assets/flight_search_booking.png)
+
+---
+
+### 3. In-Trip Concierge & Live Radar Tracking
+Travelers can check live flight status during transit to get real-time gate, terminal, and baggage claim updates, along with a direct link to track the aircraft on **FlightRadar24**:
+
+![Live Flight Radar & Status](assets/live_flight_radar_tracking.png)
+
+---
+
+### 4. Destination-Based Chat History (ADK Web UI)
+Every session is automatically indexed and displayed in the sidebar by destination place (e.g., *Trip to Manali, India*, *Trip to Jaipur*, *Trip to Tirupati*, *Trip to Ladakh*), making it effortless to revisit past itineraries:
+
+![Destination-Named Sessions](assets/destination_sessions_sidebar.png)
 
 ---
 
@@ -78,6 +111,12 @@ The system coordinates specialized autonomous agents to deliver end-to-end trave
 
 ```
 Travel-Planner/
+├── assets/                           # Screenshots & working model visual assets
+│   ├── agent_graph_architecture.png
+│   ├── destination_attractions_planning.png
+│   ├── destination_sessions_sidebar.png
+│   ├── flight_search_booking.png
+│   └── live_flight_radar_tracking.png
 ├── adk_multiagent_systems/
 │   ├── callback_logging.py           # Safe console logging with Windows encoding support
 │   └── travel_planner/
@@ -95,7 +134,7 @@ Travel-Planner/
 ├── .env.example                      # Template for API keys
 ├── .gitignore                        # Git exclusion rules for secrets & cache
 ├── requirements.txt                  # Python dependencies
-└── README.md                         # Documentation
+└── README.md                         # Project documentation
 ```
 
 ---
@@ -108,8 +147,8 @@ Travel-Planner/
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/hemu2205/Travel-Planner.git
-cd Travel-Planner
+git clone https://github.com/hemu2205/Travel-Planner-agent.git
+cd Travel-Planner-agent
 ```
 
 ### 3. Create & Activate Virtual Environment
@@ -157,10 +196,10 @@ python -m google.adk.cli run adk_multiagent_systems
 
 ## 💡 Example Queries to Try
 
-- *"I want to plan a 5-day trip to Tokyo in October. Can you suggest top attractions?"*
-- *"Find me flights from New York to Paris departing on 2026-11-10."*
+- *"I want to plan a 4-day trip to Manali for adventure and relaxation with friends."*
+- *"Find me flights from Bangalore to Manali on 2026-10-15."*
+- *"What is the live status of flight IndiGo 6E2313?"*
 - *"Search for boutique hotels in Rome for next week."*
-- *"What is the live flight status for flight EK201?"*
 - *"Build a 3-day day-by-day itinerary for Ladakh and export it to a file."*
 - *"What are the local transportation options and etiquette tips for visiting Kyoto?"*
 
